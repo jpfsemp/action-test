@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment'     
+        description: 'Environment' 
+        type: choice
         required: true
         default: 'dev'
+        options:
+         - dev
+         - qa
+         - prd
   
 jobs:
   print:
