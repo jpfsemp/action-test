@@ -7,17 +7,34 @@ on:
         description: 'Environment'     
         required: true
         default: 'dev'
-      
+  
 jobs:
-  Print:
+  print:
     runs-on: ubuntu-latest
     steps:
     - run: echo ${{ github.event.inputs.environment }}
     - run: echo ${{ vars.WhoAmI }}
     
-  Deploy:
+  deploy-dev:
+    if: ${{ github.event.inputs.environment }} == 'dev' 
     runs-on: ubuntu-latest
-    needs: Print
-    environment: ${{ github.event.inputs.environment }}
+    needs: print
+    environment: 'dev'
+    steps:
+    - run: echo ${{ vars.WhoAmI }}
+    
+  deploy-qa:
+    if: ${{ github.event.inputs.environment }} == 'qa' 
+    runs-on: ubuntu-latest
+    needs: print
+    environment: 'qa'
+    steps:
+    - run: echo ${{ vars.WhoAmI }}
+    
+  deploy-prd:
+    if: ${{ github.event.inputs.environment }} == 'prd' 
+    runs-on: ubuntu-latest
+    needs: print
+    environment: 'prd'
     steps:
     - run: echo ${{ vars.WhoAmI }}
