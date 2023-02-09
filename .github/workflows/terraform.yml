@@ -24,9 +24,9 @@ jobs:
       
     - name: Format Output
       run: |
-        echo ${{ steps.plan.outputs.stdout }}
-        echo ${{ steps.plan.outputs.stderr }}
-        echo ${{ steps.plan.outputs.exitcode }}
+        echo ${{ steps.fmt.outputs.stdout }}
+        echo ${{ steps.fmt.outputs.stderr }}
+        echo ${{ steps.fmt.outputs.exitcode }}
       
     - name: Terraform Init
       id: init
