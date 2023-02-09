@@ -1,0 +1,9 @@
+name: GCP Login
+
+on:
+  workflow_dispatch
+  
+jobs:
+  GCP:
+    runs-on: ubuntu-latest
+    
