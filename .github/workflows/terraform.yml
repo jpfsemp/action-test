@@ -28,7 +28,7 @@ jobs:
     - name: Tfsec
       uses: aquasecurity/tfsec-action@v1.0.3
       with:
-        additional_args: --force-all-dirs --verbose
+        additional_args: --force-all-dirs
         soft_fail: false
    
     - name: Terraform Plan
