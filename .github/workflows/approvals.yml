@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: echo ${{ github.event.inputs.environment }}
+    - run: echo ${{ vars.WhoAmI }}
     
   Deploy:
     runs-on: ubuntu-latest
