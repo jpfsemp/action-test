@@ -8,37 +8,48 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
+    # Download Last Version Repo
     - name: Checkout
       uses: actions/checkout@v3
       
+    # Install Latest Version Terraform
     - name: Terraform Install Latest
       uses: hashicorp/setup-terraform@v2
       id: tfsetup
       with:
         terraform_version: latest
-      
+     
+     # Terraform Initializer 
     - name: Terraform Init
       id: init
       run: terraform init
-
+      
+    #  Terraform Validation
     - name: Terraform Validate
       id: validate
       run: terraform validate
     
-    - name: Tfsec
+    # Terraform Security Analysis
+    - name: tfsec analyzer
       uses: aquasecurity/tfsec-action@v1.0.3
       with:
         version: latest
         additional_args: --force-all-dirs --out tfsecresult
         soft_fail: false
     
-    - name: Out 
+    # Security Result Output
+    - name: tfsec output 
       run: cat tfsecresult
+      if: always()
       
+    # Terraform Plan with credential GCP  
     - name: Terraform Plan
       id: plan
-      run: terraform plan
+      run: terraform plan 
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        
+        
+  
         
         
