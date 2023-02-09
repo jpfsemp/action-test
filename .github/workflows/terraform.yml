@@ -2,10 +2,20 @@ name: Terraform
 
 on:
   workflow_dispatch:
-
+    inputs:
+      environment:
+        description: 'Environment' 
+        type: choice
+        required: true
+        default: 'dev'
+        options:
+         - dev
+         - qa
+         - prd
 jobs:
   setup:
     runs-on: ubuntu-latest
+    environment: 'variables_${{ github.event.inputs.environment }}'
     steps:
     
     # Download Last Version Repo
@@ -48,6 +58,12 @@ jobs:
       run: terraform plan 
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        
+        
+  Deploy:
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - run: ${{ github.event.inputs.environment }}
         
         
   
