@@ -13,13 +13,24 @@ jobs:
       
     - name: Terraform Install Latest
       uses: hashicorp/setup-terraform@v2
+      id: tfsetup
       with:
         terraform_version: latest
         
     - name: Terraform Init
+      id: init
       run: terraform init
-        
+      
+    - name: Terraform Format
+      id: fmt
+      run: terraform fmt -check
+      
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate
+      
     - name: Terraform Plan
+      id: plan
       run: terraform plan
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
