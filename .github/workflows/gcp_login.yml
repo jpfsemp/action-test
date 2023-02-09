@@ -1,16 +1,16 @@
 name: GCP Login
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
     inputs:
-    environment:
-      description: 'Environment' 
-      type: choice
-      required: true
-      default: 'cli'
-      options:
-       - cli
-       - fed
+      environment:
+        description: 'Environment' 
+        type: choice
+        required: true
+        default: 'cli'
+        options:
+         - cli
+         - fed
   
 jobs:
 
