@@ -29,9 +29,12 @@ jobs:
       uses: aquasecurity/tfsec-action@v1.0.3
       with:
         version: latest
-        additional_args: --force-all-dirs
+        additional_args: --force-all-dirs --out tfsecresult
         soft_fail: false
-
+    
+    - name: Out 
+      run: cat tfsecresult
+      
     - name: Terraform Plan
       id: plan
       run: terraform plan
