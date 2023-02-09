@@ -17,6 +17,11 @@ jobs:
 # With Service Account Key JSON
   GCP:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      
     steps:
     
 # Authenticating via Service Account Key JSON
