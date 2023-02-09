@@ -84,6 +84,13 @@ jobs:
         with:
           name: plan
 
+      # Install Latest Version Terraform
+      - name: Terraform Install Latest
+        uses: hashicorp/setup-terraform@v2
+        id: tfsetup
+        with:
+          terraform_version: latest
+        
       # Terraform Apply with credential GCP and output file tfplan
       - name: Terraform Apply
         id: apply
