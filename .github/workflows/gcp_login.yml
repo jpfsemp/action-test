@@ -2,6 +2,15 @@ name: GCP Login
 
 on:
   workflow_dispatch
+    inputs:
+    environment:
+      description: 'Environment' 
+      type: choice
+      required: true
+      default: 'cli'
+      options:
+       - cli
+       - fed
   
 jobs:
 
@@ -9,11 +18,22 @@ jobs:
   GCP:
     runs-on: ubuntu-latest
     steps:
-    - id: 'auth'
+    
+      if: ${{ github.event.inputs.environment == 'cli' }}
+    - id: 'auth-cli'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+        # Configure Workload Identity Federation via a credentials file.
+      
+      if: ${{ github.event.inputs.environment == 'fed' }}
+    - id: 'auth-fed'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        workload_identity_provider: 'projects/284735288225/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+        service_account: 'sa-gcloud-cli@civil-epigram-370317.iam.gserviceaccount.com'
         
     - run: gcloud storage ls
     
