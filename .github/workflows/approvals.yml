@@ -8,8 +8,6 @@ on:
         required: true
         default: 'dev'
       
-      
-      
 jobs:
   Print:
     runs-on: ubuntu-latest
@@ -21,4 +19,4 @@ jobs:
     needs: Print
     environment: 'dev'
     steps:
-    - run: echo ${{ github.event.inputs.environment }}
+    - run: echo ${{ vars.WhoAmI }}
