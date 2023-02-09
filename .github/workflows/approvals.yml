@@ -12,6 +12,9 @@ on:
          - dev
          - qa
          - prd
+env:
+  # Setting an environment variable with the value of a configuration variable
+  env_var: 'variables_dev'
   
 jobs:
   print:
@@ -19,6 +22,7 @@ jobs:
     steps:
     - run: echo ${{ github.event.inputs.environment }}
     - run: echo ${{ vars.WhoAmI }}
+    - run: echo ${{ vars.GOOGLE_CREDENTIALS }}
     
   deploy-dev:
     if: ${{ github.event.inputs.environment == 'dev' }} 
