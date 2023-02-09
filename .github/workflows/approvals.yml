@@ -19,6 +19,8 @@ env:
 jobs:
   print:
     runs-on: ubuntu-latest
+    environment: 
+      name: variables_dev
     steps:
     - run: echo ${{ github.event.inputs.environment }}
     - run: echo ${{ vars.WhoAmI }}
