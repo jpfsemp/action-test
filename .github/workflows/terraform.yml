@@ -84,8 +84,19 @@ jobs:
         with:
           name: plan
 
-      - run: echo ${{ github.event.inputs.environment }} && cat tfplan  
-        
+      # Terraform Apply with credential GCP and output file tfplan
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply tfplan
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  
+      # Terraform Apply with credential GCP and output file tfplan
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform destroy tfplan
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         
   
         
