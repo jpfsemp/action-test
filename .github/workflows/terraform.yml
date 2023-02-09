@@ -52,6 +52,7 @@ jobs:
         version: latest
         additional_args: --force-all-dirs --out tfsecresult
         soft_fail: false
+        github_token: ${{ GITHUB_TOKEN }}
     
     # Security Result Output
     - name: tfsec output 
