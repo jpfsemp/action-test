@@ -19,16 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-      if: ${{ github.event.inputs.environment == 'cli' }}
+# Authenticating via Service Account Key JSON
     - id: 'auth-cli'
+      if: ${{ github.event.inputs.environment == 'cli' }}
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-        # Configure Workload Identity Federation via a credentials file.
-      
-      if: ${{ github.event.inputs.environment == 'fed' }}
+       
+ # Configure Workload Identity Federation via a credentials file.
     - id: 'auth-fed'
+      if: ${{ github.event.inputs.environment == 'fed' }}
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
