@@ -71,7 +71,7 @@ jobs:
       if: always()
       
     # Terraform Plan with credential GCP and output file tfplan
-    - name: Terraform Plan - ${{ github.event.inputs.type }}
+    - name: Terraform Plan - ${{ github.event.inputs.action }}
       id: plan
       run: |
       
@@ -132,7 +132,7 @@ jobs:
           fi
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          TERRAFORM_TYPE: ${{ github.event.inputs.type }}
+          TERRAFORM_TYPE: ${{ github.event.inputs.action }}
   
         
         
