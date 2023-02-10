@@ -74,22 +74,22 @@ jobs:
     - name: Terraform Plan - ${{ github.event.inputs.action }}
       id: plan
       run: |
-      
-          if [[ $TERRAFORM_TYPE -eq 'apply' ]]
-          then
+          echo  $TERRAFORM_ACTION
+          # if [[ $TERRAFORM_ACTION -eq 'apply' ]]
+          # then
           
-            terraform plan --out=tfplan
+          #   terraform plan --out=tfplan
             
-          elif [[ $TERRAFORM_TYPE -eq 'destroy' ]
-          then
+          # elif [[ $TERRAFORM_ACTION -eq 'destroy' ]
+          # then
           
-            terraform plan -destroy --out=tfplan
+          #   terraform plan -destroy --out=tfplan
             
-          fi
+          # fi
         
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-        TERRAFORM_TYPE: ${{ github.event.inputs.action }}
+        TERRAFORM_ACTION: ${{ github.event.inputs.action }}
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
@@ -98,43 +98,43 @@ jobs:
        path: ./tfplan  
 
         
-  Deploy:
-    runs-on: ubuntu-latest
-    needs: Plan 
-    environment: ${{ github.event.inputs.environment }}
-    steps:
+  # Deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: Plan 
+  #   environment: ${{ github.event.inputs.environment }}
+  #   steps:
     
-      - name: Download a Build Artifact
-        uses: actions/download-artifact@v3.0.2
-        with:
-          name: plan
+  #     - name: Download a Build Artifact
+  #       uses: actions/download-artifact@v3.0.2
+  #       with:
+  #         name: plan
 
-      # Install Latest Version Terraform
-      - name: Terraform Install Latest
-        uses: hashicorp/setup-terraform@v2
-        id: tfsetup
-        with:
-          terraform_version: latest
+  #     # Install Latest Version Terraform
+  #     - name: Terraform Install Latest
+  #       uses: hashicorp/setup-terraform@v2
+  #       id: tfsetup
+  #       with:
+  #         terraform_version: latest
         
-      # Terraform Apply with credential GCP and output file tfplan
-      - name: Terraform ${{ github.event.inputs.action }}
-        id: deploy
-        run: |
+  #     # Terraform Apply with credential GCP and output file tfplan
+  #     - name: Terraform ${{ github.event.inputs.action }}
+  #       id: deploy
+  #       run: |
           
-          if [[ $TERRAFORM_TYPE -eq 'apply' ]]
-          then
+  #         if [[ $TERRAFORM_ACTION -eq 'apply' ]]
+  #         then
           
-            terraform apply tfplan -auto-approve
+  #           terraform apply tfplan -auto-approve
             
-          elif [[ $TERRAFORM_TYPE -eq 'destroy' ]
-          then
+  #         elif [[ $TERRAFORM_ACTION -eq 'destroy' ]
+  #         then
           
-            terraform destroy tfplan -auto-approve
+  #           terraform destroy tfplan -auto-approve
             
-          fi
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          TERRAFORM_TYPE: ${{ github.event.inputs.action }}
+  #         fi
+  #       env:
+  #         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #         TERRAFORM_ACTION: ${{ github.event.inputs.action }}
   
         
         
