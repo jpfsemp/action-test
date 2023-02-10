@@ -91,6 +91,7 @@ jobs:
        path: |
           !.git
           !.github
+          |.terraform.lock.hcl
           !**/*.md
           !.terraform
           !tfsec
