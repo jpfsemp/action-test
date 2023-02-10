@@ -26,6 +26,7 @@ run-name: Terraform ${{ inputs.action }} ${{ inputs.environment }}
 
 jobs:
   Plan:
+    name: Plan ${{ inputs.action }} ${{ inputs.environment }}
     runs-on: ubuntu-latest
     environment: 'variables_${{ inputs.environment }}'
     steps:
@@ -96,6 +97,7 @@ jobs:
           !tfsec*
        
   Deploy:
+    name: Deploy ${{ inputs.action }} ${{ inputs.environment }}
     runs-on: ubuntu-latest
     needs: Plan 
     environment: ${{ inputs.environment }}
