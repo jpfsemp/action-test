@@ -27,6 +27,8 @@ run-name: Terraform ${{ inputs.action }} ${{ inputs.environment }}
 
 env:
   TERRAFORM_VERSION: 1.3.7
+  TERRAFORM_VARS_PATH: ""
+  TERRAFORM_VARS: ""
 
 jobs:
   Plan:
@@ -99,8 +101,8 @@ jobs:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TERRAFORM_ACTION: ${{ inputs.action }}
         OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
-        TERRAFORM_VARS: ""
-        TERRAFORM_VARS_PATH: ./env/dev.tfvars
+        TERRAFORM_VARS: ${{ env.TERRAFORM_VARS }}
+        TERRAFORM_VARS_PATH: ${{ env.TERRAFORM_VARS_PATH }}
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
