@@ -76,11 +76,8 @@ jobs:
       run: |
 
           if [[ "$TERRAFORM_ACTION" == "apply" ]]; then
-            echo 'Estou no apply'
             terraform plan --out=$OUTPUT_FILE_NAME
-            
           elif [[ "$TERRAFORM_ACTION" == "destroy" ]]; then
-            echo 'Estou no destroy'
             terraform plan -destroy --out=$OUTPUT_FILE_NAME  
           fi
         
@@ -127,16 +124,10 @@ jobs:
         id: deploy
         run: |
           
-          if [[ $TERRAFORM_ACTION -eq 'apply' ]]
-          then
-          
-            terraform apply $OUTPUT_FILE_NAME 
-            
-          elif [[ $TERRAFORM_ACTION -eq 'destroy' ]]
-          then
-          
+          if [[ "$TERRAFORM_ACTION" == "apply" ]]; then        
+            terraform apply $OUTPUT_FILE_NAME             
+          elif [[ "$TERRAFORM_ACTION" == "destroy" ]]; then        
             terraform destroy $OUTPUT_FILE_NAME 
-            
           fi
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
