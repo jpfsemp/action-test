@@ -75,12 +75,12 @@ jobs:
       id: plan
       run: |
       
-          if [[ $TERRAFORM_TYPE == 'apply' ]]
+          if [[ $TERRAFORM_TYPE -eq 'apply' ]]
           then
           
             terraform plan --out=tfplan
             
-          elif [[ $TERRAFORM_TYPE == 'destroy' ]
+          elif [[ $TERRAFORM_TYPE -eq 'destroy' ]
           
             terraform plan -destroy --out=tfplan
             
@@ -120,12 +120,12 @@ jobs:
         id: deploy
         run: |
           
-          if [[ $TERRAFORM_TYPE == 'apply' ]]
+          if [[ $TERRAFORM_TYPE -eq 'apply' ]]
           then
           
             terraform apply tfplan -auto-approve
             
-          elif [[ $TERRAFORM_TYPE == 'destroy' ]
+          elif [[ $TERRAFORM_TYPE -eq 'destroy' ]
           
             terraform destroy tfplan -auto-approve
             
