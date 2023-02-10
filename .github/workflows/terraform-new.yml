@@ -80,8 +80,7 @@ jobs:
       
         TERRAFORM_ARGUMENTS="--out=$OUTPUT_FILE_NAME"
         if [[ ! -z $TERRAFORM_VARS ]]; then
-            TERRAFORM_ARGUMENTS+=" -var="
-            TERRAFORM_ARGUMENTS+="$TERRAFORM_VARS"
+            TERRAFORM_ARGUMENTS+=" -var=$TERRAFORM_VARS"
         fi
 
           echo $TERRAFORM_ARGUMENTS 
