@@ -1,5 +1,6 @@
 name: Terraform
 
+
 on:
   # push:
   #  branches: 
@@ -24,6 +25,8 @@ on:
         options:
          - apply
          - destroy
+
+run-name: Terraform ${{ inputs.environment }} - ${{ inputs.action }}
 
 jobs:
   Plan:
