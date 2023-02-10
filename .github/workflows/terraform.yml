@@ -118,7 +118,7 @@ jobs:
         with:
           terraform_version: latest
 
-      Terraform Initializer 
+      # Terraform Initializer 
       - name: Terraform Init
         id: init
         run: terraform init
