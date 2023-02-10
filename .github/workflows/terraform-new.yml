@@ -97,7 +97,7 @@ jobs:
               TERRAFORM_ARGUMENTS+=" -destroy"
             fi
             echo $TERRAFORM_ARGUMENTS
-            terraform plan  $TERRAFORM_ARGUMENTS -var=$TERRAFORM_VARS     
+            terraform plan  $TERRAFORM_ARGUMENTS -var="$TERRAFORM_VARS"     
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TERRAFORM_ACTION: ${{ inputs.action }}
