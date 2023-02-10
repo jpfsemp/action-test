@@ -2,6 +2,6 @@ variable "name_gcs" {
   default = "defaulttfjax"
 }
 
-variable "name-vpc" {
+variable "name_vpc" {
   default = "defaulttfjax"
 }
