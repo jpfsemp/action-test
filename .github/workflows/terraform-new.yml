@@ -82,6 +82,12 @@ jobs:
             if [ ! -z $TERRAFORM_VARS ]; then
                 TERRAFORM_ARGUMENTS+=" -var=$TERRAFORM_VARS"
             fi
+            
+                   
+            # If TERRAFORM_VARS_PATH is not empty 
+            if [ ! -z $TERRAFORM_VARS_PATH ];then
+              TERRAFORM_ARGUMENTS+=" -var-file=$TERRAFORM_VARS_PATH"
+            fi
 
             echo $TERRAFORM_ARGUMENTS
       
