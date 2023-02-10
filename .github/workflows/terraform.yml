@@ -59,13 +59,13 @@ jobs:
       uses: aquasecurity/tfsec-action@v1.0.3
       with:
         version: latest
-        additional_args: --force-all-dirs --out ${{ runner.temp }}/tfsecresult
+        additional_args: --force-all-dirs --out tfsec/tfsecresult
         soft_fail: false
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     # Security Result Output
     - name: tfsec output 
-      run: cat $RUNNER_TEMP/tfsecresult
+      run: cat tfsec/tfsecresult
       if: always()
       
     # Terraform Plan with credential GCP and output file tfplan
@@ -94,7 +94,7 @@ jobs:
           |.terraform.lock.hcl
           !**/*.md
           !.terraform
-          !tfsec
+          !tfsec*
        
   Deploy:
     runs-on: ubuntu-latest
