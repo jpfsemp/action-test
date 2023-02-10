@@ -22,7 +22,7 @@ resource "google_compute_network" "vpc_network" {
 }
 
 resource "google_storage_bucket" "static-site" {
-  name          = "limaofrescojax"
+  name          = var.name_gcs
   location      = "EU"
 
 }
