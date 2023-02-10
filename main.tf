@@ -5,20 +5,13 @@ terraform {
       version = "3.5.0"
     }
   }
+  backend "gcs" {
+    bucket  = "gjaxbucket"
+    prefix  = "terraform/pipeline-github"
+}
 }
 
-# terraform {
-#   backend "gcs" {
-#     bucket  = "gjaxbucket"
-#     prefix  = "terraform/vpc-stg"
-#     credentials = "./key-dev.json"
-#   }
-# }
-
-
 provider "google" {
-  # credentials = file("key-dev.json")
-
   project = "civil-epigram-370317"
   region  = "us-central1"
   zone    = "us-central1-c"
@@ -26,7 +19,7 @@ provider "google" {
 
 resource "google_compute_network" "vpc_network" {
   name = "terraform-network"
-}
+}""
 
 resource "google_storage_bucket" "static-site" {
   name          = "limaofrescojax"
