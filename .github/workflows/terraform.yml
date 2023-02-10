@@ -124,12 +124,12 @@ jobs:
           if [[ $TERRAFORM_ACTION -eq 'apply' ]]
           then
           
-            terraform apply tfplan -auto-approve
+            terraform apply -auto-approve tfplan 
             
           elif [[ $TERRAFORM_ACTION -eq 'destroy' ]]
           then
           
-            terraform destroy tfplan -auto-approve
+            terraform destroy -auto-approve tfplan 
             
           fi
         env:
