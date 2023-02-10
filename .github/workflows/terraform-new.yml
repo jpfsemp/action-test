@@ -82,7 +82,7 @@ jobs:
             
             # If TERRAFORM_VARS is not empty add argument -vars
             if [[ ! -z $TERRAFORM_VARS ]]; then
-                TERRAFORM_ARGUMENTS+=" -var=${$TERRAFORM_VARS}"
+                TERRAFORM_ARGUMENTS+=" -var=$TERRAFORM_VARS"
             fi          
                    
             # If TERRAFORM_VARS_PATH is not empty add -var-file argument
