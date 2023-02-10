@@ -102,7 +102,7 @@ jobs:
 
             TERRAFORM_ARGUMENTS+=" --out=$OUTPUT_FILE_NAME"
             
-            terraform plan  $TERRAFORM_ARGUMENTS -var="$TERRAFORM_VARS"    
+            terraform plan  $TERRAFORM_ARGUMENTS
           
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
