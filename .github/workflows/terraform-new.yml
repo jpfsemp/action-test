@@ -94,7 +94,8 @@ jobs:
             if [[ $TERRAFORM_ACTION == 'destroy' ]];then
               TERRAFORM_ARGUMENTS+=" -destroy"
             fi
-
+            
+            # Define output file
             TERRAFORM_ARGUMENTS+=" --out=$OUTPUT_FILE_NAME"
             
             terraform plan  $TERRAFORM_ARGUMENTS
