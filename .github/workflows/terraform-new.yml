@@ -74,12 +74,12 @@ jobs:
     - name: Terraform Plan - ${{ inputs.action }}
       id: plan
       run: |
-            terraform plan -vars="$TERRAFORM_VARS" -var-file=$TERRAFORM_VARS_PATH --out=$OUTPUT_FILE_NAME        
+            terraform plan -var=$TERRAFORM_VARS -var-file=$TERRAFORM_VARS_PATH --out=$OUTPUT_FILE_NAME        
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TERRAFORM_ACTION: ${{ inputs.action }}
         OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
-        TERRAFORM_VARS: "name_gcs='pipejaxdev' name_vpc='pipejaxdev'"
+        TERRAFORM_VARS: "name_gcs=pipejaxdev name_vpc=pipejaxdev"
         TERRAFORM_VARS_PATH: ./tfvars/dev.tfvars
         
     - name: Upload a Build Artifact
