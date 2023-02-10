@@ -88,10 +88,8 @@ jobs:
             if [ ! -z $TERRAFORM_VARS_PATH ];then
               TERRAFORM_ARGUMENTS+=" -var-file=$TERRAFORM_VARS_PATH"
             fi
-
-            echo $TERRAFORM_ARGUMENTS
-      
-            # terraform plan -var="$TERRAFORM_VARS" -var-file=$TERRAFORM_VARS_PATH --out=$OUTPUT_FILE_NAME        
+    
+            terraform plan  $TERRAFORM_ARGUMENTS       
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TERRAFORM_ACTION: ${{ inputs.action }}
