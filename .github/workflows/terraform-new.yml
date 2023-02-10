@@ -80,7 +80,7 @@ jobs:
         TERRAFORM_ACTION: ${{ inputs.action }}
         OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
         TERRAFORM_VARS: "name_gcs=pipejaxdev name_vpc=pipejaxdev"
-        TERRAFORM_VARS_PATH: ./tfvars/dev.tfvars
+        TERRAFORM_VARS_PATH: ./env/dev.tfvars
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
