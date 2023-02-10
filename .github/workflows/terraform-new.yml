@@ -81,7 +81,7 @@ jobs:
             TERRAFORM_ARGUMENTS="--out=$OUTPUT_FILE_NAME"
             
             # If TERRAFORM_VARS is not empty add argument -vars
-            if [ ! -z ${TERRAFORM_VARS} ]; then
+            if [[ ! -z $TERRAFORM_VARS ]]; then
                 TERRAFORM_ARGUMENTS+=" -var=$TERRAFORM_VARS"
             fi
             
