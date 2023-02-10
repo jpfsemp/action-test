@@ -86,7 +86,7 @@ jobs:
                 read -a varlist <<< "$TERRAFORM_VARS"
                 for varitem in "${varlist[@]}";
                 do
-                TERRAFORM_ARGUMENTS+=" -var='$varitem'"
+                TERRAFORM_ARGUMENTS+=" -var=$varitem"
                 done  
             fi
                               
