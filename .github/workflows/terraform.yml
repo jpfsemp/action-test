@@ -118,12 +118,12 @@ jobs:
         with:
           terraform_version: latest
 
-      # Terraform Initializer 
-      # - name: Terraform Init
-      #   id: init
-      #   run: terraform init
-        # env:
-        #   GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      Terraform Initializer 
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        env:
+          GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       # Terraform Apply with credential GCP and output file tfplan
       - name: Terraform ${{ github.event.inputs.action }}
