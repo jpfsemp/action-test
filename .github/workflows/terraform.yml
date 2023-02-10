@@ -59,7 +59,7 @@ jobs:
       uses: aquasecurity/tfsec-action@v1.0.3
       with:
         version: latest
-        additional_args: --force-all-dirs --out $RUNNER_TEMP/tfsecresult
+        additional_args: --force-all-dirs --out ${{ RUNNER_TEMP }}/tfsecresult
         soft_fail: false
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
