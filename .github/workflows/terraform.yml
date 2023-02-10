@@ -88,7 +88,7 @@ jobs:
         
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-        TERRAFORM_TYPE: ${{ github.event.inputs.type }}
+        TERRAFORM_TYPE: ${{ github.event.inputs.action }}
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
@@ -116,7 +116,7 @@ jobs:
           terraform_version: latest
         
       # Terraform Apply with credential GCP and output file tfplan
-      - name: Terraform Apply
+      - name: Terraform ${{ github.event.inputs.action }}
         id: deploy
         run: |
           
