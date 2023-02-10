@@ -92,7 +92,7 @@ jobs:
           *
           !.git
           !.github
-          |.terraform.lock.hcl
+          !.terraform.lock.hcl
           !**/*.md
           !.terraform
           !tfsec*
