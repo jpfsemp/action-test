@@ -117,7 +117,7 @@ jobs:
         
       # Terraform Apply with credential GCP and output file tfplan
       - name: Terraform Apply
-        id: ${{ github.event.inputs.type }}
+        id: deploy
         run: |
           
           if [[ $TERRAFORM_TYPE == 'apply' ]]
