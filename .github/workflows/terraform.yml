@@ -39,6 +39,8 @@ jobs:
     - name: Terraform Init
       id: init
       run: terraform init
+      env:
+        GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
       
     #  Terraform Validation
     - name: Terraform Validate
