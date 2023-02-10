@@ -27,7 +27,7 @@ run-name: Terraform ${{ inputs.action }} ${{ inputs.environment }}
 
 env:
   TERRAFORM_VERSION: 1.3.7
-  TERRAFORM_VARS_PATH: "name_gcs=pipedevjax name_vpc=pipedevjax"
+  TERRAFORM_VARS_PATH: 'name_gcs=pipedevjax name_vpc=pipedevjax'
   TERRAFORM_VARS: ""
 
 jobs:
