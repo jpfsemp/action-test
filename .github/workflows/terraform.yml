@@ -75,11 +75,11 @@ jobs:
       id: plan
       run: |
 
-          if [[ $TERRAFORM_ACTION -eq 'apply' ]]; then
+          if [[ "$TERRAFORM_ACTION" == "apply" ]]; then
             echo 'Estou no apply'
             terraform plan --out=$OUTPUT_FILE_NAME
             
-          elif [[ $TERRAFORM_ACTION -eq 'destroy' ]]; then
+          elif [[ "$TERRAFORM_ACTION" == "destroy" ]]; then
             echo 'Estou no destroy'
             terraform plan -destroy --out=$OUTPUT_FILE_NAME  
           fi
