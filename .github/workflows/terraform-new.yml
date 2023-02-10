@@ -74,7 +74,15 @@ jobs:
     - name: Terraform Plan - ${{ inputs.action }}
       id: plan
       run: |
-            terraform plan -var="$TERRAFORM_VARS" -var-file=$TERRAFORM_VARS_PATH --out=$OUTPUT_FILE_NAME        
+      
+            TERRAFORM_ARGUMENTS="--out=$OUTPUT_FILE_NAME"
+            if [ -n $TERRAFORM_VARS ]; then
+                TERRAFORM_ARGUMENTS+=' -var=$TERRAFORM_VARS
+            fi
+
+            echo $TERRAFORM_ARGUMENTS
+      
+            # terraform plan -var="$TERRAFORM_VARS" -var-file=$TERRAFORM_VARS_PATH --out=$OUTPUT_FILE_NAME        
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TERRAFORM_ACTION: ${{ inputs.action }}
