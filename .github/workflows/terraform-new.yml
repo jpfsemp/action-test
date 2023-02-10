@@ -108,7 +108,7 @@ jobs:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TERRAFORM_ACTION: ${{ inputs.action }}
         OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
-        TERRAFORM_VARS: "${{ env.TERRAFORM_VARS }}"
+        TERRAFORM_VARS: ${{ env.TERRAFORM_VARS }}
         TERRAFORM_VARS_PATH: ${{ env.TERRAFORM_VARS_PATH }}
         
     - name: Upload a Build Artifact
