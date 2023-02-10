@@ -99,6 +99,7 @@ jobs:
        path: |
           *.tfplan
           .terraform
+          .terraform.lock.hcl
        
   Deploy:
     runs-on: ubuntu-latest
