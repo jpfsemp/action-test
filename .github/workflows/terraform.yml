@@ -78,18 +78,19 @@ jobs:
           if [[ $TERRAFORM_ACTION -eq 'apply' ]]
           then
           
-            terraform plan --out=tfplan
+            terraform plan --out=$OUTPUT_FILE_NAME
             
           elif [[ $TERRAFORM_ACTION -eq 'destroy' ]]
           then
           
-            terraform plan -destroy --out=tfplan
+            terraform plan -destroy --out=$OUTPUT_FILE_NAME
             
           fi
         
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TERRAFORM_ACTION: ${{ github.event.inputs.action }}
+        OUTPUT_FILE_NAME: ${{ github.event.inputs.action }}.tfplan
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
@@ -131,17 +132,18 @@ jobs:
           if [[ $TERRAFORM_ACTION -eq 'apply' ]]
           then
           
-            terraform apply tfplan 
+            terraform apply $OUTPUT_FILE_NAME 
             
           elif [[ $TERRAFORM_ACTION -eq 'destroy' ]]
           then
           
-            terraform destroy tfplan 
+            terraform destroy $OUTPUT_FILE_NAME 
             
           fi
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           TERRAFORM_ACTION: ${{ github.event.inputs.action }}
+          OUTPUT_FILE_NAME: ${{ github.event.inputs.action }}.tfplan
   
         
         
