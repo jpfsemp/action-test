@@ -1,7 +1,7 @@
 variable "name_gcs" {
-  default = ""
+  default = "defaulttfjax"
 }
 
 variable "name-vpc" {
-  default = ""
+  default = "defaulttfjax"
 }
