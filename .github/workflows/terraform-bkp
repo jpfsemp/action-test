@@ -1,0 +1,161 @@
+name: Terraform BKP
+
+on:  
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment' 
+        type: choice
+        required: true
+        default: 'dev'
+        options:
+         - dev
+         - qa
+         - prd
+         
+      action:
+        description: 'Action' 
+        type: choice
+        required: true
+        default: 'apply'
+        options:
+         - apply
+         - destroy
+         
+
+run-name: Terraform ${{ inputs.action }} ${{ inputs.environment }}
+
+env:
+  TERRAFORM_VERSION: 1.3.7
+  TERRAFORM_VARS_PATH: ""
+  TERRAFORM_VARS: "name_gcs=pipedevjax name_vpc=pipedevjax"
+
+jobs:
+  Plan:
+    runs-on: ubuntu-latest
+    environment: 'variables_${{ inputs.environment }}'
+    steps:
+    
+    # Download Last Version Repo
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    # Install Latest Version Terraform
+    - name: Terraform install ${{ env.TERRAFORM_VERSION }}
+      uses: hashicorp/setup-terraform@v2
+      id: tfsetup
+      with:
+        terraform_version: ${{ env.TERRAFORM_VERSION }}
+     
+     # Terraform Initializer 
+    - name: Terraform Init
+      id: init
+      run: terraform init
+      env:
+        GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+      
+    #  Terraform Validation
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate
+    
+    # Terraform Security Analysis
+    - name: tfsec analyzer
+      uses: aquasecurity/tfsec-action@v1.0.3
+      with:
+        version: latest
+        additional_args: --force-all-dirs --out tfsecresult
+        soft_fail: false
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    # Security Result Output
+    - name: tfsec output 
+      run: cat tfsecresult
+      if: always()
+      
+    # Terraform Plan with credential GCP and output file tfplan
+    - name: Terraform Plan - ${{ inputs.action }}
+      id: plan
+      run: |
+      
+            TERRAFORM_ARGUMENTS=""
+            
+            # If TERRAFORM_VARS is not empty add argument -vars
+            if [[ ! -z $TERRAFORM_VARS ]]; then
+                IFS=' '
+                read -a varlist <<< "$TERRAFORM_VARS"
+                for varitem in "${varlist[@]}";
+                do
+                TERRAFORM_ARGUMENTS+=" -var=$varitem"
+                done  
+            fi
+                              
+            # If TERRAFORM_VARS_PATH is not empty add -var-file argument
+            if [ ! -z $TERRAFORM_VARS_PATH ];then
+              TERRAFORM_ARGUMENTS+=" -var-file=$TERRAFORM_VARS_PATH"
+            fi
+            
+            # If TERRAFORM_VARS_PATH is not empty 
+            if [[ $TERRAFORM_ACTION == 'destroy' ]];then
+              TERRAFORM_ARGUMENTS+=" -destroy"
+            fi
+
+            TERRAFORM_ARGUMENTS+=" --out=$OUTPUT_FILE_NAME"
+            
+            terraform plan  $TERRAFORM_ARGUMENTS
+          
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        TERRAFORM_ACTION: ${{ inputs.action }}
+        OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
+        TERRAFORM_VARS: "${{ env.TERRAFORM_VARS }}"
+        TERRAFORM_VARS_PATH: ${{ env.TERRAFORM_VARS_PATH }}
+        
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.2
+      with:
+       name: plan
+       path: |
+          *
+          !.git
+          !.github
+          !**/*.md
+          !.terraform*
+          !tfsec*
+       
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: Plan 
+    environment: ${{ inputs.environment }}
+    steps:
+    
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.2
+        with:
+          name: plan
+
+      # Install Latest Version Terraform
+      - name: Terraform Install Latest
+        uses: hashicorp/setup-terraform@v2
+        id: tfsetup
+        with:
+          terraform_version: latest
+
+      # Terraform Initializer 
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        env:
+          GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      # Terraform Apply with credential GCP and output file tfplan
+      - name: Terraform ${{ inputs.action }}
+        id: deploy
+        run: terraform apply $OUTPUT_FILE_NAME             
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          TERRAFORM_ACTION: ${{ inputs.action }}
+          OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
+  
+        
+        
