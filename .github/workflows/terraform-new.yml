@@ -74,19 +74,13 @@ jobs:
     - name: Terraform Plan - ${{ inputs.action }}
       id: plan
       run: |
-
-          if [[ "$TERRAFORM_ACTION" == "apply" ]]; then
-            terraform plan --out=$OUTPUT_FILE_NAME
-          elif [[ "$TERRAFORM_ACTION" == "destroy" ]]; then
-            terraform plan -destroy --out=$OUTPUT_FILE_NAME  
-          fi
-        
+            terraform plan -vars=$TERRAFORM_VARS -var-file=$TERRAFORM_VARS_PATH --out=$OUTPUT_FILE_NAME        
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TERRAFORM_ACTION: ${{ inputs.action }}
         OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
-        TERRAFORM_VARS: "name=joao location=eua casa=aqui"
-        TERRAFORM_VARS_PATH:
+        TERRAFORM_VARS: "name_gcs=pipejaxdev name_vpc"
+        TERRAFORM_VARS_PATH: ./tfvars/dev.tfvars
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
