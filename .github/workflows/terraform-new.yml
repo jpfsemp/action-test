@@ -1,4 +1,4 @@
-name: Terraform
+name: Terraform Model
 
 on:  
   workflow_dispatch:

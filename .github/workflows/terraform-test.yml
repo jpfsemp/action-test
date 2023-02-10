@@ -1,5 +1,4 @@
-name: Terraform
-
+name: Terraform Test
 
 on:  
   workflow_dispatch:
