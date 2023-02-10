@@ -77,7 +77,6 @@ jobs:
     - name: Terraform Plan - ${{ inputs.action }}
       id: plan
       run: |
-      
             TERRAFORM_ARGUMENTS=""
             
             # If TERRAFORM_VARS is not empty add argument -vars
@@ -120,6 +119,7 @@ jobs:
           !tfsec*
        
   Deploy:
+    
     runs-on: ubuntu-latest
     needs: Plan 
     environment: ${{ inputs.environment }}
@@ -147,11 +147,29 @@ jobs:
       # Terraform Apply with credential GCP and output file tfplan
       - name: Terraform ${{ inputs.action }}
         id: deploy
-        run: terraform apply $OUTPUT_FILE_NAME             
+        run: |
+              TERRAFORM_ARGUMENTS=""
+
+              # If TERRAFORM_VARS is not empty add argument -vars
+              if [[ ! -z $TERRAFORM_VARS ]]; then
+                  TERRAFORM_ARGUMENTS+=" $TERRAFORM_VARS"
+              fi
+
+              # If TERRAFORM_VARS_PATH is not empty add -var-file argument
+              if [ ! -z $TERRAFORM_VARS_PATH ];then
+                TERRAFORM_ARGUMENTS+=" -var-file=$TERRAFORM_VARS_PATH"
+              fi
+
+               # Define output file
+              TERRAFORM_ARGUMENTS+=" --out=$OUTPUT_FILE_NAME"
+
+              terraform apply  $TERRAFORM_ARGUMENTS
+
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           TERRAFORM_ACTION: ${{ inputs.action }}
           OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
-  
+          TERRAFORM_VARS: ${{ env.TERRAFORM_VARS }}
+          TERRAFORM_VARS_PATH: ${{ env.TERRAFORM_VARS_PATH }}
         
         
