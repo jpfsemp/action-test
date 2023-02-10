@@ -19,7 +19,7 @@ provider "google" {
 
 resource "google_compute_network" "vpc_network" {
   name = "terraform-network"
-}""
+}
 
 resource "google_storage_bucket" "static-site" {
   name          = "limaofrescojax"
