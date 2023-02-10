@@ -75,16 +75,14 @@ jobs:
       id: plan
       run: |
 
-          # if [[ $TERRAFORM_ACTION -eq 'apply' ]]
-          # then
-          #   echo 'Estou no apply'
-          #   terraform plan --out=$OUTPUT_FILE_NAME
+          if [[ $TERRAFORM_ACTION -eq 'apply' ]]; then
+            echo 'Estou no apply'
+            terraform plan --out=$OUTPUT_FILE_NAME
             
-          # elif [[ $TERRAFORM_ACTION -eq 'destroy' ]]
-          # then
-          #   echo 'Estou no destroy'
+          elif [[ $TERRAFORM_ACTION -eq 'destroy' ]]; then
+            echo 'Estou no destroy'
             terraform plan -destroy --out=$OUTPUT_FILE_NAME  
-          # fi
+          fi
         
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
