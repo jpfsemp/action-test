@@ -1,2 +1,2 @@
 name_gcs="devtfvarsjax"
-name-vpc="devtfvarsjax"
+name_vpc="devtfvarsjax"
