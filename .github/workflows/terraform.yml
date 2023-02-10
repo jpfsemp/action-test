@@ -1,3 +1,5 @@
+name: Terraform - ${{ github.event.inputs.action }}
+
 on:
   # push:
   #  branches: 
@@ -22,9 +24,7 @@ on:
         options:
          - apply
          - destroy
-
-name: Terraform - ${{ github.event.inputs.action }}
-         
+                  
 jobs:
   Plan:
     runs-on: ubuntu-latest
