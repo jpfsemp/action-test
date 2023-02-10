@@ -91,6 +91,7 @@ jobs:
        path: |
           *.tfplan
           **/*.tf
+          **/*.tfvars
        
   Deploy:
     runs-on: ubuntu-latest
