@@ -31,7 +31,7 @@ run-name: Terraform ${{ inputs.action }} ${{ inputs.environment }}
 jobs:
   Plan:
     runs-on: ubuntu-latest
-    environment: 'variables_${{ github.event.inputs.environment }}'
+    environment: 'variables_${{ inputs.environment }}'
     steps:
     
     # Download Last Version Repo
@@ -72,7 +72,7 @@ jobs:
       if: always()
       
     # Terraform Plan with credential GCP and output file tfplan
-    - name: Terraform Plan - ${{ github.event.inputs.action }}
+    - name: Terraform Plan - ${{ inputs.action }}
       id: plan
       run: |
 
@@ -84,8 +84,8 @@ jobs:
         
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-        TERRAFORM_ACTION: ${{ github.event.inputs.action }}
-        OUTPUT_FILE_NAME: ${{ github.event.inputs.action }}.tfplan
+        TERRAFORM_ACTION: ${{ inputs.action }}
+        OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
@@ -102,7 +102,7 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     needs: Plan 
-    environment: ${{ github.event.inputs.environment }}
+    environment: ${{ inputs.environment }}
     steps:
     
       - name: Download a Build Artifact
@@ -125,13 +125,13 @@ jobs:
           GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       # Terraform Apply with credential GCP and output file tfplan
-      - name: Terraform ${{ github.event.inputs.action }}
+      - name: Terraform ${{ inputs.action }}
         id: deploy
         run: terraform apply $OUTPUT_FILE_NAME             
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          TERRAFORM_ACTION: ${{ github.event.inputs.action }}
-          OUTPUT_FILE_NAME: ${{ github.event.inputs.action }}.tfplan
+          TERRAFORM_ACTION: ${{ inputs.action }}
+          OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
   
         
         
