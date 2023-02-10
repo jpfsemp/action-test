@@ -89,6 +89,7 @@ jobs:
       with:
        name: plan
        path: |
+          *
           !.git
           !.github
           |.terraform.lock.hcl
