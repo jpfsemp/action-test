@@ -75,18 +75,16 @@ jobs:
       id: plan
       run: |
 
-          echo [[ $TERRAFORM_ACTION -eq 'apply' ]]
-          echo [[ $TERRAFORM_ACTION -eq 'destroy' ]]
-          
+          echo $([[ $TERRAFORM_ACTION -eq 'apply' ]])
+          echo $([[ $TERRAFORM_ACTION -eq 'destroy' ]])
+
           if [[ $TERRAFORM_ACTION -eq 'apply' ]]
           then
             terraform plan --out=$OUTPUT_FILE_NAME
             
           elif [[ $TERRAFORM_ACTION -eq 'destroy' ]]
           then
-          
-            terraform plan -destroy --out=$OUTPUT_FILE_NAME
-            
+            terraform plan -destroy --out=$OUTPUT_FILE_NAME  
           fi
         
       env:
