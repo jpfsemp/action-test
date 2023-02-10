@@ -81,6 +81,7 @@ jobs:
             terraform plan --out=tfplan
             
           elif [[ $TERRAFORM_TYPE -eq 'destroy' ]
+          then
           
             terraform plan -destroy --out=tfplan
             
@@ -126,6 +127,7 @@ jobs:
             terraform apply tfplan -auto-approve
             
           elif [[ $TERRAFORM_TYPE -eq 'destroy' ]
+          then
           
             terraform destroy tfplan -auto-approve
             
