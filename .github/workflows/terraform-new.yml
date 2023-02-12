@@ -135,7 +135,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         id: tfsetup
         with:
-          terraform_version: latest
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
 
       # Terraform Initializer 
       - name: Terraform Init
