@@ -147,7 +147,7 @@ jobs:
       # Terraform Apply with credential GCP and output file tfplan
       - name: Terraform ${{ inputs.action }}
         id: deploy
-        run:  terraform apply --out=$OUTPUT_FILE_NAME"
+        run: terraform apply --out=$OUTPUT_FILE_NAME
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
