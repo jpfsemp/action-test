@@ -141,8 +141,8 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-        # env:
-         # GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        env:
+         GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       # Terraform Apply with credential GCP and output file tfplan
       - name: Terraform ${{ inputs.action }}
