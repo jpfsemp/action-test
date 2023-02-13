@@ -44,7 +44,7 @@ jobs:
         run: |
           if [[ $BRANCH_NAME != 'main' && $ENVIRONMENT_DEPLOY == 'prd' ]];then
             echo "Apenas a branch *main* pode ser aplicada em produção" >> $GITHUB_STEP_SUMMARY
-            echo "::warning::Apenas a branch main pode ser aplicada em produção"
+            echo "::error::Apenas a branch main pode ser aplicada em produção"
             exit 1
           fi
         env:
