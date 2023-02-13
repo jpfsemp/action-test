@@ -28,7 +28,9 @@ run-name: Terraform ${{ inputs.action }} ${{ inputs.environment }}
 env:
   TERRAFORM_VERSION: 1.3.7
   TERRAFORM_VARS_PATH: ""
-  TERRAFORM_VARS: "-var=name_gcs=pipedevjax -var=name_vpc=pipedevjax"
+  TERRAFORM_VARS: ""
+  TERRAFORM_GCP_BACKEND_BUCKET: "gjaxbucket"
+  TERRAFORM_GCP_BACKEND_PREFIX: "GOIABA_${{ inputs.environment }}"
 
 jobs:
   Plan:
@@ -68,8 +70,8 @@ jobs:
             terraform init $TERRAFORM_ARGUMENTS
       env:
         GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-        TERRAFORM_GCP_BACKEND_BUCKET: ${{ vars.TERRAFORM_GCP_BACKEND_BUCKET }}
-        TERRAFORM_GCP_BACKEND_PREFIX: ${{ vars.TERRAFORM_GCP_BACKEND_PREFIX }}
+        TERRAFORM_GCP_BACKEND_BUCKET: ${{ env.TERRAFORM_GCP_BACKEND_BUCKET }}
+        TERRAFORM_GCP_BACKEND_PREFIX: ${{ env.TERRAFORM_GCP_BACKEND_PREFIX }}
         
       
     #  Terraform Validation
