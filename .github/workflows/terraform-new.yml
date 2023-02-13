@@ -85,6 +85,7 @@ jobs:
     # Terraform Security Analysis
     - name: tfsec analyzer
       uses: aquasecurity/tfsec-action@v1.0.3
+      if: ${{ inputs.action == 'apply' }}
       with:
         version: latest
         additional_args: --force-all-dirs --out tfsecresult
@@ -94,7 +95,7 @@ jobs:
     # Security Result Output
     - name: tfsec output 
       run: cat tfsecresult
-      if: always()
+      if: always() && ${{ inputs.action == 'apply' }}
       
     # Terraform Plan with credential GCP and output file tfplan
     - name: "plan_${{ inputs.environment }}: Terraform plan ${{ inputs.action }}"
