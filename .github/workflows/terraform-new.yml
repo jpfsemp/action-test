@@ -48,7 +48,7 @@ jobs:
             exit 1
           fi
         env:
-          BRANCH_NAME: ${{ github.GITHUB_REF_NAME }}
+          BRANCH_NAME: ${{ github.ref.name }}
           ENVIRONMENT_DEPLOY: ${{ inputs.environment }}
           
   Plan:
