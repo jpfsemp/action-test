@@ -33,8 +33,17 @@ env:
   TERRAFORM_GCP_BACKEND_PREFIX: ""
   TERRAFORM_TFPLAN_NAME: ${{ inputs.action }}_${{ github.sha }}
   TERRAFORM_ACTION: ${{ inputs.action }}
+  ENABLE_DEPLOY: false
 
 jobs:
+
+  Setup: 
+    runs-on: ubuntu-latest
+    steps:
+    - run: | 
+        echo "ENABLE_DEPLOY=True" >> $GITHUB_OUTPUT
+    - run: |
+        echo ${{ env.ENABLE_DEPLOY }}
   Plan:
     name:  "${{ inputs.environment }}: Terraform plan ${{ inputs.action }}"
     runs-on: ubuntu-latest
