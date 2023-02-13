@@ -99,7 +99,7 @@ jobs:
       if: always()
       
     # Terraform Plan with credential GCP and output file tfplan
-    - name: "plan_${{ inputs.environment }}: Terraform plan ${{ input.action }}"
+    - name: "plan_${{ inputs.environment }}: Terraform plan ${{ inputs.action }}"
       id: plan
       run: |
             TERRAFORM_ARGUMENTS=""
@@ -144,7 +144,7 @@ jobs:
           !tfsec*
        
   Deploy:
-    name: "${{ inputs.environment }}: Terraform ${{ input.action }}"
+    name: "${{ inputs.environment }}: Terraform ${{ inputs.action }}"
     runs-on: ubuntu-latest
     needs: Plan
     environment: ${{ inputs.environment }}
@@ -187,7 +187,7 @@ jobs:
           TERRAFORM_GCP_BACKEND_PREFIX: ${{ env.TERRAFORM_GCP_BACKEND_PREFIX }}
 
       # Terraform Apply with credential GCP and output file tfplan
-      - name: "${{ inputs.environment }}: Terraform ${{ input.action }}"
+      - name: "${{ inputs.environment }}: Terraform ${{ inputs.action }}"
         id: apply-destroy
         run: terraform apply $TERRAFORM_TFPLAN_NAME
         env:
