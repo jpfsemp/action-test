@@ -50,6 +50,10 @@ jobs:
           BRANCH_NAME: ${{ github.GITHUB_REF_NAME }}
           ENVIRONMENT_DEPLOY: ${{ inputs.environment }}
           
+      - name: Define Enable Deploy
+        run: |
+          echo ${{ var.ENABLE_DEPLOY }}
+       
   Plan:
     name:  "${{ inputs.environment }}: Terraform plan ${{ inputs.action }}"
     if: ${{ var.ENABLE_DEPLOY == true }} 
