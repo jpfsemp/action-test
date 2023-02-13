@@ -44,17 +44,13 @@ jobs:
         id: deploy-enable
         run: |
           if [[ $BRANCH_NAME != 'main' && $ENVIRONMENT_DEPLOY == 'prd' ]];then
-            echo "ENABLE_DEPLOY=false" >> $GITHUB_ENV
+            echo "Apenas a branch *main* pode ser aplicada em produção" >> $GITHUB_STEP_SUMMARY
+            exit 1
           fi
         env:
           BRANCH_NAME: ${{ github.GITHUB_REF_NAME }}
           ENVIRONMENT_DEPLOY: ${{ inputs.environment }}
           
-      - name: Define Enable Deploy
-        run: |
-          echo ${{ env.ENABLE_DEPLOY }}
-          exit 1
-       
   Plan:
     name:  "${{ inputs.environment }}: Terraform plan ${{ inputs.action }}"
     runs-on: ubuntu-latest
