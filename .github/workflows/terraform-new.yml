@@ -109,7 +109,7 @@ jobs:
       if: ${{ inputs.action == 'apply' }}
       with:
         version: latest
-        additional_args: --force-all-dirs --no-colour --out tfsecresult
+        additional_args: --force-all-dirs --out tfsecresult
         soft_fail: false
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -117,7 +117,6 @@ jobs:
     - name: tfsec output 
       run: |
         result_tfsec=$(cat tfsecresult)
-        echo  $result_tfsec >> $GITHUB_STEP_SUMMARY
   
       if: ${{ always() &&  inputs.action == 'apply' }}
       
