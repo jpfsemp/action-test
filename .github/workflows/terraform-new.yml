@@ -33,7 +33,7 @@ env:
 jobs:
   Plan:
     runs-on: ubuntu-latest
-    # environment: 'variables_${{ inputs.environment }}'
+    environment: 'plan_${{ inputs.environment }}'
     steps:
     
     # Download Last Version Repo
