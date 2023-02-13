@@ -33,8 +33,7 @@ env:
   TERRAFORM_GCP_BACKEND_PREFIX: ""
   TERRAFORM_TFPLAN_NAME: ${{ inputs.action }}_${{ github.sha }}
   TERRAFORM_ACTION: ${{ inputs.action }}
-  ENABLE_DEPLOY: true
-
+  
 jobs:
 
   Setup: 
@@ -45,6 +44,7 @@ jobs:
         run: |
           if [[ $BRANCH_NAME != 'main' && $ENVIRONMENT_DEPLOY == 'prd' ]];then
             echo "Apenas a branch *main* pode ser aplicada em produção" >> $GITHUB_STEP_SUMMARY
+            echo "::warning::Apenas a branch main pode ser aplicada em produção"
             exit 1
           fi
         env:
