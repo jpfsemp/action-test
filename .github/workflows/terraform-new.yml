@@ -115,10 +115,9 @@ jobs:
 
     # Security Result Output
     - name: tfsec output 
-      run: |
-        result_tfsec=$(cat tfsecresult)
-  
       if: ${{ always() &&  inputs.action == 'apply' }}
+      run: |
+        cat tfsecresult
       
     # Terraform Plan with credential GCP and output file tfplan
     - name: "plan_${{ inputs.environment }}: Terraform plan ${{ inputs.action }}"
