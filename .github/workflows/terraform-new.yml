@@ -164,7 +164,7 @@ jobs:
           !.github
           !**/*.md
           !.terraform*
-          !tfsec*
+         
        
   Deploy:
     name: "${{ inputs.environment }}: Terraform ${{ inputs.action }}"
