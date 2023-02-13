@@ -52,6 +52,7 @@ jobs:
             exit 1
           else
             echo "Branch **$BRANCH_NAME** pode ser aplicada em **$ENVIRONMENT_DEPLOY**" >> $GITHUB_STEP_SUMMARY
+            echo "::notice::Branch **$BRANCH_NAME** pode ser aplicada em **$ENVIRONMENT_DEPLOY**"
           fi
         env:
           BRANCH_REF: ${{ github.ref }}
