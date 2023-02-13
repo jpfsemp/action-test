@@ -44,7 +44,7 @@ jobs:
         id: deploy-enable
         run: |
           if [[ $BRANCH_NAME != 'main' && $ENVIRONMENT_DEPLOY == 'prd' ]];then
-            echo "ENABLE_DEPLOY=fasle" >> $GITHUB_ENV
+            echo "ENABLE_DEPLOY=false" >> $GITHUB_ENV
           fi
         env:
           BRANCH_NAME: ${{ github.GITHUB_REF_NAME }}
