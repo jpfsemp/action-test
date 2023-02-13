@@ -109,7 +109,7 @@ jobs:
       if: ${{ inputs.action == 'apply' }}
       with:
         version: latest
-        additional_args: --force-all-dirs --out tfsecresult
+        additional_args: --force-all-dirs --no-colour --out tfsecresult
         soft_fail: false
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
