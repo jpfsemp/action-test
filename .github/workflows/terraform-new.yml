@@ -64,7 +64,7 @@ jobs:
             # If TERRAFORM_GCP_BACKEND_BUCKET is not empty add argument --backend-config="prefix=$TERRAFORM_GCP_BACKEND_PREFIX"
             if [[ ! -z $TERRAFORM_GCP_BACKEND_PREFIX ]]; then
                 
-                TERRAFORM_ARGUMENTS+=" --backend-config='bucket=$TERRAFORM_GCP_BACKEND_PREFIX'"
+                TERRAFORM_ARGUMENTS+=" --backend-config='prefix=$TERRAFORM_GCP_BACKEND_PREFIX'"
             fi
             
             terraform init $TERRAFORM_ARGUMENTS
