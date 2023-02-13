@@ -46,7 +46,11 @@ jobs:
     # Download Last Version Repo
     - name: Checkout
       uses: actions/checkout@v3
-      
+    - name: Env Show
+      run: |
+        echo ${{ env.ENVIRONMENT_PLAN }}
+        echo ${{ env.ENVIRONMENT_DEPLOY}}
+        
     # Install Latest Version Terraform
     - name: Terraform install ${{ env.TERRAFORM_VERSION }}
       uses: hashicorp/setup-terraform@v2
