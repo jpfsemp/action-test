@@ -52,7 +52,7 @@ jobs:
           
   Plan:
     name:  "${{ inputs.environment }}: Terraform plan ${{ inputs.action }}"
-    if: ${{ env.ENABLE_DEPLOY }} 
+    if: ${{ env.ENABLE_DEPLOY == true }} 
     runs-on: ubuntu-latest
     needs: Setup
     environment: plan_${{ inputs.environment }}
