@@ -42,13 +42,16 @@ jobs:
       - name: Define Enable Deploy
         id: deploy-enable
         run: |
+        
+          BRANCH_NAME=${BRANCH_REF#refs/heads/}
+          echo $BRANCH_NAME
           if [[ $BRANCH_NAME != 'main' && $ENVIRONMENT_DEPLOY = 'prd' ]];then
             echo "Apenas a branch *main* pode ser aplicada em produção" >> $GITHUB_STEP_SUMMARY
             echo "::error::Apenas a branch main pode ser aplicada em produção"
             exit 1
           fi
         env:
-          BRANCH_NAME: ${{ github.ref_name }}
+          BRANCH_REF: ${{ github.ref }}
           ENVIRONMENT_DEPLOY: ${{ inputs.environment }}
           
   Plan:
