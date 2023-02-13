@@ -43,7 +43,7 @@ jobs:
       - name: Set the value
         id: step_one
         run: |
-          echo "ENABLE_DEPLOY=false" >> $GITHUB_ENV
+          echo "ENABLE_DEPLOY=true" >> $GITHUB_ENV
       - name: Use the value
         id: step_two
         run: |
