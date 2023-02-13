@@ -44,11 +44,14 @@ jobs:
         run: |
         
           BRANCH_NAME=${BRANCH_REF#refs/heads/}
-          echo $BRANCH_NAME
+          
           if [[ $BRANCH_NAME != 'main' && $ENVIRONMENT_DEPLOY = 'prd' ]];then
-            echo "Apenas a branch *main* pode ser aplicada em produção" >> $GITHUB_STEP_SUMMARY
-            echo "::error::Apenas a branch main pode ser aplicada em produção"
+            echo "A branch *8$BRANCH_NAME** não pode ser aplicada em **$ENVIRONMENT_DEPLOY**" >> $GITHUB_STEP_SUMMARY
+            echo "Apenas a branch **main** pode ser aplicada em **$ENVIRONMENT_DEPLOY**" >> $GITHUB_STEP_SUMMARY
+            echo "::error::Apenas a branch main pode ser aplicada em $ENVIRONMENT_DEPLOY"
             exit 1
+          else
+            echo "Branch **$BRANCH_NAME** pode ser aplicada em **$ENVIRONMENT_DEPLOY**" >> $GITHUB_STEP_SUMMARY
           fi
         env:
           BRANCH_REF: ${{ github.ref }}
