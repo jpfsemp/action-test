@@ -50,7 +50,7 @@ jobs:
       run: |
         echo ${{ env.ENVIRONMENT_PLAN }}
         echo ${{ env.ENVIRONMENT_DEPLOY}}
-        
+
     # Install Latest Version Terraform
     - name: Terraform install ${{ env.TERRAFORM_VERSION }}
       uses: hashicorp/setup-terraform@v2
@@ -59,7 +59,7 @@ jobs:
         terraform_version: ${{ env.TERRAFORM_VERSION }}
      
      # Terraform Initializer 
-    - name: Terraform Init
+    - name: "plan_${{ inputs.environment }}: Terraform init"
       id: init
       run: |
             TERRAFORM_ARGUMENTS=""
