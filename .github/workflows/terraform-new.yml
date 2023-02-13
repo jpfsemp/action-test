@@ -38,9 +38,9 @@ env:
 
 jobs:
   Plan:
-    name: "${{ env.ENVIRONMENT_DEPLOY }}: Terraform plan"
+    name: "$ENVIRONMENT_DEPLOY: Terraform plan"
     runs-on: ubuntu-latest
-    environment: ${{ env.ENVIRONMENT_PLAN }}
+    environment: $ENVIRONMENT_PLAN
     steps:
     
     # Download Last Version Repo
