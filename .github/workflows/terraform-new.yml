@@ -30,7 +30,7 @@ env:
   TERRAFORM_VARS_PATH: ""
   TERRAFORM_VARS: ""
   TERRAFORM_GCP_BACKEND_BUCKET: "gjaxbucket"
-  TERRAFORM_GCP_BACKEND_PREFIX: "GOIABA_${{ inputs.environment }}"
+  TERRAFORM_GCP_BACKEND_PREFIX: "terraform/GOIABA_${{ inputs.environment }}"
 
 jobs:
   Plan:
