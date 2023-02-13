@@ -122,14 +122,14 @@ jobs:
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
         TERRAFORM_ACTION: ${{ inputs.action }}
-        OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
+        OUTPUT_FILE_NAME: v${{ inputs.action }}_${{ github.sha }}.tfplan
         TERRAFORM_VARS: ${{ env.TERRAFORM_VARS }}
         TERRAFORM_VARS_PATH: ${{ env.TERRAFORM_VARS_PATH }}
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.2
       with:
-       name: plan
+       name: ${{ inputs.action }}_${{ github.sha }}
        path: |
           *
           !.git
@@ -157,19 +157,36 @@ jobs:
         with:
           terraform_version: ${{ env.TERRAFORM_VERSION }}
 
-      # Terraform Initializer 
+       # Terraform Initializer 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: |
+              TERRAFORM_ARGUMENTS=""
+
+              # If TERRAFORM_GCP_BACKEND_BUCKET is not empty add argument --backend-config="bucket=$TERRAFORM_GCP_BACKEND_BUCKET"
+              if [[ ! -z $TERRAFORM_GCP_BACKEND_BUCKET ]]; then
+
+                  TERRAFORM_ARGUMENTS+=" --backend-config=bucket=$TERRAFORM_GCP_BACKEND_BUCKET"
+              fi
+
+              # If TERRAFORM_GCP_BACKEND_BUCKET is not empty add argument --backend-config="prefix=$TERRAFORM_GCP_BACKEND_PREFIX"
+              if [[ ! -z $TERRAFORM_GCP_BACKEND_PREFIX ]]; then
+
+                  TERRAFORM_ARGUMENTS+=" --backend-config=prefix=$TERRAFORM_GCP_BACKEND_PREFIX"
+              fi
+
+              terraform init $TERRAFORM_ARGUMENTS
         env:
-         GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          TERRAFORM_GCP_BACKEND_BUCKET: ${{ env.TERRAFORM_GCP_BACKEND_BUCKET }}
+          TERRAFORM_GCP_BACKEND_PREFIX: ${{ env.TERRAFORM_GCP_BACKEND_PREFIX }}
 
       # Terraform Apply with credential GCP and output file tfplan
       - name: Terraform ${{ inputs.action }}
         id: deploy
-        run: terraform apply $OUTPUT_FILE_NAME -var="name_gcs=amarelojax" -var=name_vpc="amarelojax"
+        run: terraform apply $OUTPUT_FILE_NAME
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          OUTPUT_FILE_NAME: ${{ inputs.action }}.tfplan
+          OUTPUT_FILE_NAME: ${{ inputs.action }}_${{ github.sha }}.tfplan
 
         
