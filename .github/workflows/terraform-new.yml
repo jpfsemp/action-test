@@ -115,7 +115,10 @@ jobs:
 
     # Security Result Output
     - name: tfsec output 
-      run: cat tfsecresult
+      run: |
+        cat tfsecresult
+        cat  tfsecresult >> $GITHUB_STEP_SUMMARY
+  
       if: ${{ always() &&  inputs.action == 'apply' }}
       
     # Terraform Plan with credential GCP and output file tfplan
