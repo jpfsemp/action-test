@@ -52,7 +52,7 @@ jobs:
           
       - name: Define Enable Deploy
         run: |
-          echo ${{ var.ENABLE_DEPLOY }}
+          echo ${{ env.ENABLE_DEPLOY }}
        
   Plan:
     name:  "${{ inputs.environment }}: Terraform plan ${{ inputs.action }}"
