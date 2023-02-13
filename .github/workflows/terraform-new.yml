@@ -40,10 +40,15 @@ jobs:
   Setup: 
     runs-on: ubuntu-latest
     steps:
-    - run: | 
-        echo "ENABLE_DEPLOY=True" >> $GITHUB_OUTPUT
-    - run: |
-        echo ${{ env.ENABLE_DEPLOY }}
+      - name: Set the value
+        id: step_one
+        run: |
+          echo "ENABLE_DEPLOY=false" >> $GITHUB_ENV
+      - name: Use the value
+        id: step_two
+        run: |
+          echo "${{ env.ENABLE_DEPLOY }}"
+          
   Plan:
     name:  "${{ inputs.environment }}: Terraform plan ${{ inputs.action }}"
     runs-on: ubuntu-latest
