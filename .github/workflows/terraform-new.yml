@@ -38,6 +38,7 @@ env:
 
 jobs:
   Plan:
+    name: "${{ env.ENVIRONMENT_DEPLOY }}: Terraform plan"
     runs-on: ubuntu-latest
     environment: ${{ env.ENVIRONMENT_PLAN }}
     steps:
@@ -143,9 +144,9 @@ jobs:
           !tfsec*
        
   Deploy:
-    
+    name: "${{ env.ENVIRONMENT_DEPLOY }}: Terraform ${{ env.TERRAFORM_ACTION }}"
     runs-on: ubuntu-latest
-    needs: ${{ env.ENVIRONMENT_PLAN }} 
+    needs: Plan
     environment: ${{ env.ENVIRONMENT_DEPLOY }}
     steps:
     
@@ -162,7 +163,7 @@ jobs:
           terraform_version: ${{ env.TERRAFORM_VERSION }}
 
        # Terraform Initializer 
-      - name: Terraform Init
+      - name: "${{ env.ENVIRONMENT_DEPLOY }}: Terraform init"
         id: init
         run: |
               TERRAFORM_ARGUMENTS=""
@@ -186,7 +187,7 @@ jobs:
           TERRAFORM_GCP_BACKEND_PREFIX: ${{ env.TERRAFORM_GCP_BACKEND_PREFIX }}
 
       # Terraform Apply with credential GCP and output file tfplan
-      - name: Terraform ${{ env.TERRAFORM_ACTION }}
+      - name: "${{ env.ENVIRONMENT_DEPLOY }}: Terraform ${{ env.TERRAFORM_ACTION }}"
         id: apply
         run: terraform apply $TERRAFORM_TFPLAN_NAME
         env:
