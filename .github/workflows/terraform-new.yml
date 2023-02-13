@@ -116,8 +116,8 @@ jobs:
     # Security Result Output
     - name: tfsec output 
       run: |
-        cat tfsecresult
-        cat  tfsecresult >> $GITHUB_STEP_SUMMARY
+        result_tfsec=$(cat tfsecresult)
+        echo  $result_tfsec >> $GITHUB_STEP_SUMMARY
   
       if: ${{ always() &&  inputs.action == 'apply' }}
       
