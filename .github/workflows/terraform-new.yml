@@ -50,9 +50,27 @@ jobs:
      # Terraform Initializer 
     - name: Terraform Init
       id: init
-      run: terraform init
+      run: |
+            TERRAFORM_ARGUMENTS=""
+            
+            # If TERRAFORM_GCP_BACKEND_BUCKET is not empty add argument --backend-config="bucket=$TERRAFORM_GCP_BACKEND_BUCKET"
+            if [[ ! -z $TERRAFORM_GCP_BACKEND_BUCKET ]]; then
+                
+                TERRAFORM_ARGUMENTS+=" --backend-config='bucket=$TERRAFORM_GCP_BACKEND_BUCKET'"
+            fi
+            
+            # If TERRAFORM_GCP_BACKEND_BUCKET is not empty add argument --backend-config="prefix=$TERRAFORM_GCP_BACKEND_PREFIX"
+            if [[ ! -z $TERRAFORM_GCP_BACKEND_PREFIX ]]; then
+                
+                TERRAFORM_ARGUMENTS+=" --backend-config='bucket=$TERRAFORM_GCP_BACKEND_PREFIX'"
+            fi
+            
+            terraform init $TERRAFORM_ARGUMENTS
       env:
         GOOGLE_BACKEND_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        TERRAFORM_GCP_BACKEND_BUCKET: ${{ vars.TERRAFORM_GCP_BACKEND_BUCKET }}
+        TERRAFORM_GCP_BACKEND_PREFIX: ${{ vars.TERRAFORM_GCP_BACKEND_PREFIX }}
+        
       
     #  Terraform Validation
     - name: Terraform Validate
