@@ -38,7 +38,7 @@ env:
 
 jobs:
   Plan:
-    name: "${{ env.ENVIRONMENT_PLAN }} Terraform plan"
+    name:  Terraform plan ${{ env.ENVIRONMENT_PLAN }}
     runs-on: ubuntu-latest
     environment: plan_${{ inputs.environment }}
     steps:
