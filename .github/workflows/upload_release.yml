@@ -38,6 +38,7 @@ jobs:
                   body: "# Lindo né?"
                   });
                   
-            console.log(ret.properties.id)
+            console.log(ret.properties)
+            console.log(Object.keys(ret));
     - name: Result
       run: ${{ steps.result.outputs.result }} | jq
