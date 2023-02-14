@@ -1,0 +1,3 @@
+name: Create Release with Action
+
+on: [push,workflow_dispatch]
