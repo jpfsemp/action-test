@@ -26,6 +26,7 @@ jobs:
           
     - name: GitHub Script
       uses: actions/github-script@v6.4.0
+      id: result
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
@@ -36,3 +37,5 @@ jobs:
                   name: "Teste Action",
                   body: "# Lindo né?"
                   });
+    - name: Result
+      run: echo "$ {{ steps.result.outputs.result }}"
