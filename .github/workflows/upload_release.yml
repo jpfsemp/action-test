@@ -38,6 +38,6 @@ jobs:
                   body: "# Lindo né?"
                   });
             
-            console.log(keys(ret));
+            console.log(ret);
     - name: Result
       run: ${{ steps.result.outputs.result }} | jq
