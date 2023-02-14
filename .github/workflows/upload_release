@@ -1,0 +1,9 @@
+name: 'Upload Release'
+
+on: pull
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 
