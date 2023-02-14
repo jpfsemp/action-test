@@ -3,6 +3,8 @@ name: 'Test Action'
 on: [push, workflow_dispatch]
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-   - run: echo ${{ jobs }}
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+     - run: echo ${{ jobs }}
+     - run: echo ${{ toJson(jobs) }}
