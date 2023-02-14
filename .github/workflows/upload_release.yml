@@ -1,9 +1,25 @@
 name: 'Upload Release'
 
-on: pull
+on:[push]
 
 jobs:
   job:
     runs-on: ubuntu-latest
     steps:
-      - uses: 
+    
+    - name: Checkout
+      uses: actions/checkout@v3.3.0
+      
+
+      
+    - name: Add issue to project board
+
+      uses: actions/github-script@6.4.0
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+            github.rest.repos.createRelease({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  tag_name: "v1.0.0"
+                        });
