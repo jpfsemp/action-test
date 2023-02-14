@@ -118,7 +118,7 @@ jobs:
 
     # Security Result Output
     - name: tfsec output 
-      if: ${{ always() &&  inputs.action == 'apply' }}
+      if: ${{ success() || failure() &&  inputs.action == 'apply' }}
       run: |
         cat tfsecresult
       
