@@ -38,4 +38,4 @@ jobs:
                   body: "# Lindo né?"
                   });
     - name: Result
-      run: echo "${{ steps.result.outputs.result }}"
+      run: echo "${{ toJson(steps.result.outputs.result) }}"
