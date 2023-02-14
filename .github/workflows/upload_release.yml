@@ -57,5 +57,5 @@ jobs:
                                       repo: context.repo.repo,
                                       release_id: release_id,
                                       name: "main.tf",
-                                      data: '@main.tf'
+                                      data: fileUpload
                                     })
