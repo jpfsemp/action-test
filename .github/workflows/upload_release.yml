@@ -46,4 +46,4 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
            var json=  ${{ steps.result.outputs.result }}
-           console.log(keys(json))
+           console.log(Object.keys(json))
