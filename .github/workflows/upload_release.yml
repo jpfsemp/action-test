@@ -30,12 +30,14 @@ jobs:
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
-           return github.rest.repos.createRelease({
+           var ret =  github.rest.repos.createRelease({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   tag_name: "v1.0.0",
                   name: "Teste Action",
                   body: "# Lindo né?"
                   });
+                  
+            console.log(ret.properties.id)
     - name: Result
       run: ${{ steps.result.outputs.result }} | jq
