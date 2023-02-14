@@ -1,6 +1,6 @@
 name: 'Upload Release'
 
-on: [push]
+on: [push, workflow_dispatch]
 
 permissions:
   # actions: write
