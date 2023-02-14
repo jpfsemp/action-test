@@ -52,10 +52,10 @@ jobs:
            const release_id = json.data.id           
            console.log(release_id)
            
-           octokit.rest.repos.uploadReleaseAsset({
+           github.rest.repos.uploadReleaseAsset({
                                       owner: context.repo.owner,
                                       repo: context.repo.repo,
                                       release_id: release_id,
                                       name: "teste",
-                                      data: fileUpload
+                                      data: '@main.tf'
                                     })
