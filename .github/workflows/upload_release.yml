@@ -37,8 +37,7 @@ jobs:
                   name: "Teste Action",
                   body: "# Lindo né?"
                   });
-                  
-            console.log(ret.properties)
-            console.log(Object.keys(ret));
+            
+            console.log(keys(ret));
     - name: Result
       run: ${{ steps.result.outputs.result }} | jq
